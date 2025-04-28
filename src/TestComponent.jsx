@@ -7,7 +7,7 @@ function TestComponent() {
     useEffect(() => {
         axios.get('http://localhost:3000/test')
         .then(response => {
-            setMessage(response.data.test);
+            setMessage(response.data.cohereResponse);
         })
         .catch(error => {
             console.error(error);
@@ -16,10 +16,7 @@ function TestComponent() {
 
     return (
         <ul>
-        <div>
-            Hi
-        </div>
-        {message}
+            {message}
         </ul>
     );
 }
