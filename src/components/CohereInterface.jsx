@@ -24,25 +24,13 @@ function CohereInterface() {
     }
 
     const handleLogic = async (inputMessage) => {
-        if (loading) { return; }
-        const resType = parseInt(await sendMessage(`Judge whether the following message wants you to print to console, display an alert, or just type a normal message. Respond with just a 1 if it is to console, just a 2 if it is an alert, and 3 if it is a normal message. Do not include anything else in your response. The message: ${inputMessage}`));
         const resText = await sendMessage(inputMessage);
-        if (resType == 1) {
-            console.log(resText);
-            setResponse("Printed to Console");
-        }
-        else if (resType == 2) {
-            alert(resText);
-            setResponse("Alerted");
-        }
-        else {
-            setResponse(resText);
-        }
+        setResponse(resText);
         setLoading(false);
     }
 
     async function sendMessage(input) {
-        const rawResponse = await axios.post('http://localhost:3000/test', {
+        const rawResponse = await axios.post('http://localhost:3000/query', {
             //input: `Respond with the most appropriate colour in the format rgba(x,x,x,x). Respond with only the rgba. Base your colour choice off the following prompt: ${input}`
             input: input
         }).catch(error => {
