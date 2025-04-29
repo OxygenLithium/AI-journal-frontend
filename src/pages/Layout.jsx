@@ -3,12 +3,12 @@ import { Outlet, Link } from "react-router-dom";
 const Layout = () => {
   return (
     <><nav><ul>
-        <div className="top-0 w-full flex flex-row gap-3 p-4 bg-black">
+        <div className="top-0 w-full flex flex-row gap-3 py-4 px-8 bg-black">
             <li>
-                <Link to="/">Home</Link>
+                <Link to="/">Query</Link>
             </li>
             <li>
-                <Link to="/test">Test</Link>
+                <Link to="/journal">Journal</Link>
             </li>
         </div>
         </ul></nav>

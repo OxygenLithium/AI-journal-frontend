@@ -53,11 +53,11 @@ function CohereInterface() {
     };
 
     return (
-        <div className="flex-col h-full w-full">
-            <div className="overflow-y-scroll">
-                <pre>{response}</pre>
+        <div className="flex-col h-full w-full px-20">
+            <div className="max-w-full max-h-64 overflow-y-scroll">
+                <pre className="whitespace-pre-wrap break-words max-w-full text-left">{response}</pre>
             </div>
-            <div className="mt-6 flex flex-row w-full px-20">
+            <div className="mt-6 flex flex-row w-full">
                 <Input
                     className="mr-5 flex flex-grow"
                     inputRef={inputElement}

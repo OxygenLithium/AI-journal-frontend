@@ -4,7 +4,7 @@ import './App.css'
 
 import Layout from './pages/Layout'
 import QueryPage from './pages/QueryPage'
-import TestPage from  './pages/TestPage'
+import JournalPage from  './pages/JournalPage'
 import NoPage from './pages/NoPage'
 
 function App() {
@@ -13,7 +13,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<QueryPage />} />
-          <Route path="test" element={<TestPage />} />
+          <Route path="journal" element={<JournalPage />} />
           <Route path="*" element={<NoPage />} />
         </Route>
       </Routes>
