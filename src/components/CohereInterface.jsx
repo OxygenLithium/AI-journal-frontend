@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import { Input, Typography, Button } from '@mui/material';
 
-function CohereInterface({setBackground}) {
+function CohereInterface() {
     const [response, setResponse] = useState("Say something to talk to Cohere");
     const [loading, setLoading] = useState(false);
 
@@ -16,16 +16,15 @@ function CohereInterface({setBackground}) {
     });
 
     const messageEnter = async () => {
-        if (loading) { return; }
         setLoading(true);
         if (inputElement.current.value != "") {
             handleLogic(inputElement.current.value);
         }
         inputElement.current.value = "";
-        setLoading(false);
     }
 
     const handleLogic = async (inputMessage) => {
+        if (loading) { return; }
         const resType = parseInt(await sendMessage(`Judge whether the following message wants you to print to console, display an alert, or just type a normal message. Respond with just a 1 if it is to console, just a 2 if it is an alert, and 3 if it is a normal message. Do not include anything else in your response. The message: ${inputMessage}`));
         const resText = await sendMessage(inputMessage);
         if (resType == 1) {
@@ -39,6 +38,7 @@ function CohereInterface({setBackground}) {
         else {
             setResponse(resText);
         }
+        setLoading(false);
     }
 
     async function sendMessage(input) {
@@ -53,15 +53,18 @@ function CohereInterface({setBackground}) {
     };
 
     return (
-        <div className="flex-col w-full">
-            <Typography>{response}</Typography>
-            <div className="mt-6 flex-row">
+        <div className="flex-col h-full w-full">
+            <div className="overflow-y-scroll">
+                <pre>{response}</pre>
+            </div>
+            <div className="mt-6 flex flex-row w-full px-20">
                 <Input
-                    className="mr-5 w-256"
+                    className="mr-5 flex flex-grow"
                     inputRef={inputElement}
                     disabled={loading}
                 />
                 <Button
+                className="flex-none"
                 variant="contained"
                 onClick={messageEnter}
                 disabled={loading}

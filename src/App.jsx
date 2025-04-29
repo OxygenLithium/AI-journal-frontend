@@ -1,21 +1,24 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import ReactDOM from "react-dom/client";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './App.css'
 
-import CohereInterface from './CohereInterface'
+import Layout from './pages/Layout'
+import QueryPage from './pages/QueryPage'
+import TestPage from  './pages/TestPage'
+import NoPage from './pages/NoPage'
 
 function App() {
-  const [background, setBackground] = useState('rgba(0, 0, 0, 0)');
-
   return (
-    <div className="w-full h-full" style={{backgroundColor:background}}>
-      <h1 className="mb-12">AI Journalling Project: Testing</h1>
-      <CohereInterface
-        setBackground={setBackground}
-      />
-    </div>
-  )
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<QueryPage />} />
+          <Route path="test" element={<TestPage />} />
+          <Route path="*" element={<NoPage />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 export default App
