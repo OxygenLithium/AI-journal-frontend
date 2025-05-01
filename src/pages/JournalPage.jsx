@@ -10,6 +10,9 @@ function QueryPage() {
     const [ entries, setEntries ] = useState([]);
 
     async function sendJournalEntry(entry) {
+        if (entry == "") {
+            return;
+        }
         setLoading(true);
         await axios.post('http://localhost:3000/journal/write', {
             entry: entry
@@ -26,6 +29,13 @@ function QueryPage() {
         console.log(rawResponse);
         setEntries(rawResponse.data.journalEntries);
     };
+
+    document.addEventListener("keydown", (e) => {
+        if (e.code == "Enter") {
+            sendJournalEntry(inputElement.current.value);
+            inputElement.current.value = "";
+        }
+    });
 
     return (
         <div className="w-full h-full overflow-scroll">

@@ -5,6 +5,7 @@ import { Input, Typography, Button } from '@mui/material';
 
 function CohereInterface() {
     const [response, setResponse] = useState("Say something to talk to Cohere");
+    const [prevQuery, setPrevQuery] = useState("");
     const [loading, setLoading] = useState(false);
 
     const inputElement = useRef();
@@ -19,6 +20,7 @@ function CohereInterface() {
         setLoading(true);
         if (inputElement.current.value != "") {
             handleLogic(inputElement.current.value);
+            setPrevQuery(inputElement.current.value);
         }
         inputElement.current.value = "";
     }
@@ -43,7 +45,12 @@ function CohereInterface() {
     return (
         <div className="flex-col h-full w-full px-20">
             <div className="max-w-full max-h-64 overflow-y-scroll">
-                <pre className="whitespace-pre-wrap break-words max-w-full text-left">{response}</pre>
+                <div className="text-left pb-5">
+                    {prevQuery}
+                </div>
+                <pre className="whitespace-pre-wrap break-words max-w-full text-left">
+                    {response
+                }</pre>
             </div>
             <div className="mt-6 flex flex-row w-full">
                 <Input
