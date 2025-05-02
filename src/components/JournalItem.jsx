@@ -1,6 +1,6 @@
 function JournalItem({item}) {
     return (
-        <div className="bg-gray-300 rounded-md p-3">
+        <div className="bg-gray-300 rounded-md py-3 px-6 w-full">
             {item.text}
         </div>
     )

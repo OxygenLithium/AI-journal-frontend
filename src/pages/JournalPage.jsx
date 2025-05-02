@@ -42,28 +42,26 @@ function QueryPage() {
     });
 
     return (
-        <div className="w-full h-full overflow-scroll">
-            <div className="px-12 py-30">
-                <h1 className="mb-12">Write a Journal Entry</h1>
-                <JournalEntryScroll entries={entries}/>
-                <div className="mt-6 flex flex-row w-full">
-                    <Input
-                        className="mr-5 flex flex-grow"
-                        inputRef={inputElement}
-                        disabled={loading}
-                    />
-                    <Button
-                    className="flex-none"
-                    variant="contained"
-                    onClick={() => {
-                        sendJournalEntry(inputElement.current.value);
-                        inputElement.current.value = "";
-                    }}
+        <div className="w-full h-full overflow-scroll px-12 py-30 flex-1 flex flex-col">
+            <h1 className="mb-12">Write a Journal Entry</h1>
+            <JournalEntryScroll className="flex-shrink" entries={entries}/>
+            <div className="mt-6 flex flex-row w-full">
+                <Input
+                    className="mr-5 flex flex-grow"
+                    inputRef={inputElement}
                     disabled={loading}
-                    >
-                        Save
-                    </Button>
-                </div>
+                />
+                <Button
+                className="flex-none"
+                variant="contained"
+                onClick={() => {
+                    sendJournalEntry(inputElement.current.value);
+                    inputElement.current.value = "";
+                }}
+                disabled={loading}
+                >
+                    Save
+                </Button>
             </div>
         </div>
     )
