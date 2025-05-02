@@ -33,7 +33,6 @@ function CohereInterface() {
 
     async function sendMessage(input) {
         const rawResponse = await axios.post('http://localhost:3000/query', {
-            //input: `Respond with the most appropriate colour in the format rgba(x,x,x,x). Respond with only the rgba. Base your colour choice off the following prompt: ${input}`
             input: input
         }).catch(error => {
             console.error(error);

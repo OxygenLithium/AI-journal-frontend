@@ -9,17 +9,18 @@ function QueryPage() {
     const inputElement = useRef();
     const [ loading, setLoading ] = useState(false);
     const [ entries, setEntries ] = useState([]);
+    const [ lastSeen, setLastSeen ] = useState(-1);
 
     useEffect(() => {
         async function fetchData() {
-            await axios.post('http://localhost:3000/journal/instantiateCursor');
-            const entriesRaw = await axios.get('http://localhost:3000/journal/loadMore');
+            const entriesRaw = await axios.get(`http://localhost:3000/journal/loadMore/${lastSeen}`);
             console.log(entriesRaw);
             setEntries((prev) => prev.concat(entriesRaw.data.journalEntries));
+            setLastSeen(entries[entries.length-1]._id);
         }
 
         fetchData();
-    }, [])
+    }, []);
 
     async function sendJournalEntry(entry) {
         if (entry == "") {
