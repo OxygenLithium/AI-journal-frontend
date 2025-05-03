@@ -1,12 +1,19 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import JournalItem from './JournalItem';
+import axios from 'axios';
 
-function JournalEntryScroll({entries, loadMore}) {
+function JournalEntryScroll({entries, loadMore, noMore}) {
     const scrollRef = useRef(null);
+    const noMoreRef = useRef(noMore);
+
+    useEffect(() => {
+        noMoreRef.current = noMore;
+    }, [noMore])
 
     useEffect(() => {
         const scroll = scrollRef.current;
         scroll.addEventListener('scroll',() => {
+            if (noMoreRef.current) { return; }
             if (scroll.scrollHeight - scroll.scrollTop - scroll.clientHeight < 32) {
                 loadMore();
             }
@@ -18,7 +25,7 @@ function JournalEntryScroll({entries, loadMore}) {
             {entries.map((el, idx) => {
                 return <JournalItem item={el} key={idx}/>
             })}
-            <div className="h-32"/>
+            <div className="h-32">{noMore ? "You have reached the bottom" : ""}</div>
         </div>
     )
 }

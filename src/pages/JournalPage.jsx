@@ -7,23 +7,36 @@ import JournalEntryScroll from '../components/JournalEntryScroll';
 
 function QueryPage() {
     const inputElement = useRef();
+
     const [ loading, setLoading ] = useState(false);
     const [ entries, setEntries ] = useState([]);
-    const [ lastSeen, setLastSeen ] = useState(-1);
+    const [ noMoreEntries, setNoMoreEntries ] = useState(false)
+
+    const entriesRef = useRef(entries);
+    const newContentLoadingRef = useRef(false);
 
     useEffect(() => {
         loadMore();
     }, []);
 
     useEffect(() => {
-        if (entries.length > 0) {
-            setLastSeen(entries[entries.length-1]._id);
-        }
+        entriesRef.current = entries;
     }, [entries]);
 
     const loadMore = async () => {
-        const entriesRaw = await axios.get(`http://localhost:3000/journal/loadMore/${lastSeen}`);
-        setEntries((prev) => prev.concat(entriesRaw.data.journalEntries));
+        if (newContentLoadingRef.current) { return; }
+        newContentLoadingRef.current = true;
+        setLoading(true);
+
+        const currentEntries = entriesRef.current;
+
+        const entriesRaw = await axios.get(`http://localhost:3000/journal/loadMore/${currentEntries.length > 0 ? currentEntries[currentEntries.length-1]._id : -1}`);
+        const newEntries = entriesRaw.data.journalEntries;
+        setEntries((prev) => prev.concat(newEntries));
+        if (newEntries.length == 0) { setNoMoreEntries(true); }
+        
+        newContentLoadingRef.current = false;
+        setLoading(false);
     }
 
     async function sendJournalEntry(entry) {
@@ -48,12 +61,12 @@ function QueryPage() {
 
     return (
         <div className="w-full h-full overflow-scroll px-12 py-30 flex-1 flex flex-col">
-            <Button onClick={loadMore}>test</Button>
             <h1 className="mb-12">Write a Journal Entry</h1>
             <JournalEntryScroll
                 className="flex-shrink"
                 entries={entries}
                 loadMore={loadMore}
+                noMore={noMoreEntries}
             />
             <div className="mt-6 flex flex-row w-full">
                 <Input
