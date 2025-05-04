@@ -1,7 +1,7 @@
 import React, { useCallback, useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 
-import { Input, Typography, Button } from '@mui/material';
+import { TextField, Typography, Button } from '@mui/material';
 import JournalEntryScroll from '../components/JournalEntryScroll';
 
 
@@ -52,6 +52,11 @@ function QueryPage() {
         setLoading(false);
     };
 
+    async function sendAndClear() {
+        sendJournalEntry(inputElement.current.value);
+        inputElement.current.value = "";
+    }
+
     async function deleteEntry(id) {
         setLoading(true);
         await axios.delete(`http://localhost:3000/journal/delete/${id}`).catch(error => {
@@ -61,12 +66,14 @@ function QueryPage() {
         setLoading(false);
     };
 
-    document.addEventListener("keydown", (e) => {
+    const handleKeyDown = (e) => {
         if (e.code == "Enter") {
-            sendJournalEntry(inputElement.current.value);
-            inputElement.current.value = "";
+            console.log(e.shiftKey);
+            if (!e.shiftKey && inputElement.current.value != "") {
+                sendAndClear();
+            }
         }
-    });
+    };
 
     return (
         <div className="w-full h-full overflow-scroll px-12 py-30 flex-1 flex flex-col">
@@ -78,19 +85,18 @@ function QueryPage() {
                 noMore={noMoreEntries}
                 deleteEntry={deleteEntry}
             />
-            <div className="mt-6 flex flex-row w-full">
-                <Input
+            <div className="mt-6 gap-5 flex flex-row w-full">
+                <TextField
                     className="mr-5 flex flex-grow"
                     inputRef={inputElement}
                     disabled={loading}
+                    multiline
+                    onKeyDown={handleKeyDown}
                 />
                 <Button
                 className="flex-none"
                 variant="contained"
-                onClick={() => {
-                    sendJournalEntry(inputElement.current.value);
-                    inputElement.current.value = "";
-                }}
+                onClick={sendAndClear}
                 disabled={loading}
                 >
                     Save

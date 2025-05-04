@@ -10,15 +10,15 @@ function CohereInterface() {
 
     const inputElement = useRef();
 
-    document.addEventListener("keydown", (e) => {
+    const handleKeyDown = (e) => {
         if (e.code == "Enter") {
             messageEnter();
         }
-    });
+    };
 
     const messageEnter = async () => {
         setLoading(true);
-        if (inputElement.current.value != "") {
+        if (inputElement.current && inputElement.current.value != "") {
             handleLogic(inputElement.current.value);
             setPrevQuery(inputElement.current.value);
         }
@@ -56,6 +56,7 @@ function CohereInterface() {
                     className="mr-5 flex flex-grow"
                     inputRef={inputElement}
                     disabled={loading}
+                    onKeyDown={handleKeyDown}
                 />
                 <Button
                 className="flex-none"
