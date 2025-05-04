@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from 'react';
 import JournalItem from './JournalItem';
 import axios from 'axios';
 
-function JournalEntryScroll({entries, loadMore, noMore}) {
+function JournalEntryScroll({entries, loadMore, noMore, deleteEntry}) {
     const scrollRef = useRef(null);
     const noMoreRef = useRef(noMore);
 
@@ -23,7 +23,7 @@ function JournalEntryScroll({entries, loadMore, noMore}) {
     return (
         <div ref={scrollRef} className="h-full flex flex-col gap-5 overflow-y-scroll p-4" style={{scrollbarWidth: 'none'}}>
             {entries.map((el, idx) => {
-                return <JournalItem item={el} key={idx}/>
+                return <JournalItem item={el} key={idx} deleteEntry={deleteEntry}/>
             })}
             <div className="h-32">{noMore ? "You have reached the bottom" : ""}</div>
         </div>

@@ -52,6 +52,15 @@ function QueryPage() {
         setLoading(false);
     };
 
+    async function deleteEntry(id) {
+        setLoading(true);
+        await axios.delete(`http://localhost:3000/journal/delete/${id}`).catch(error => {
+            console.error(error);
+        });
+        setEntries((prev) => prev.filter((el) => el.id != id));
+        setLoading(false);
+    };
+
     document.addEventListener("keydown", (e) => {
         if (e.code == "Enter") {
             sendJournalEntry(inputElement.current.value);
@@ -67,6 +76,7 @@ function QueryPage() {
                 entries={entries}
                 loadMore={loadMore}
                 noMore={noMoreEntries}
+                deleteEntry={deleteEntry}
             />
             <div className="mt-6 flex flex-row w-full">
                 <Input
