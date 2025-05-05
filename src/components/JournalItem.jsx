@@ -3,15 +3,17 @@ import { IconButton } from "@mui/material";
 import ThreeDots from "./ThreeDots";
 
 function JournalItem({item, deleteEntry}) {
+    const [ isEditing, setIsEditing ] = useState(false);
+
     return (
         <div className="bg-gray-300 rounded-md py-3 px-6 pt-6 pr-20 w-full relative">
-            <ThreeDots
+            {!isEditing && <ThreeDots
                 options={[{
                     text: "Delete",
                     function: () => { deleteEntry(item.id) }
                 }]}
-            />
-            <pre className="mr-20">{item.text}</pre>
+            />}
+            {!isEditing && <pre className="mr-20">{item.text}</pre>}
         </div>
     )
 }

@@ -44,11 +44,12 @@ function QueryPage() {
             return;
         }
         setLoading(true);
-        await axios.post('http://localhost:3000/journal/write', {
+        const insertReturn = await axios.post('http://localhost:3000/journal/write', {
             entry: entry
         }).catch(error => {
             console.error(error);
         });
+        setEntries((prev) => [insertReturn.data.insertedEntry].concat(prev))
         setLoading(false);
     };
 
