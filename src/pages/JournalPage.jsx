@@ -63,7 +63,7 @@ function QueryPage() {
         await axios.delete(`http://localhost:3000/journal/delete/${id}`).catch(error => {
             console.error(error);
         });
-        setEntries((prev) => prev.filter((el) => el.id != id));
+        setEntries((prev) => prev.filter((el) => el._id != id));
         setLoading(false);
     };
 

@@ -10,7 +10,7 @@ function JournalItem({item, deleteEntry}) {
             {!isEditing && <ThreeDots
                 options={[{
                     text: "Delete",
-                    function: () => { deleteEntry(item.id) }
+                    function: () => { deleteEntry(item._id) }
                 }]}
             />}
             {!isEditing && <pre className="mr-20">{item.text}</pre>}
