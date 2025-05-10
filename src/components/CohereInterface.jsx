@@ -32,7 +32,7 @@ function CohereInterface() {
     }
 
     async function sendMessage(input) {
-        const rawResponse = await axios.post('http://localhost:3000/query', {
+        const rawResponse = await axios.put('http://localhost:3000/query', {
             input: input
         }).catch(error => {
             console.error(error);
