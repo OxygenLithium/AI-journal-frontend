@@ -68,12 +68,12 @@ function QueryPage() {
     };
 
     const handleKeyDown = (e) => {
-        if (e.code == "Enter") {
-            console.log(e.shiftKey);
-            if (!e.shiftKey && inputElement.current.value != "") {
-                sendAndClear();
-            }
-        }
+        // if (e.code == "Enter") {
+        //     console.log(e.shiftKey);
+        //     if (!e.shiftKey && inputElement.current.value != "") {
+        //         sendAndClear();
+        //     }
+        // }
     };
 
     return (

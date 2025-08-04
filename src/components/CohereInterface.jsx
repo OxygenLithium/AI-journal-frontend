@@ -4,7 +4,7 @@ import axios from 'axios';
 import { Input, Typography, Button } from '@mui/material';
 
 function CohereInterface() {
-    const [response, setResponse] = useState("Say something to talk to Cohere");
+    const [response, setResponse] = useState("What would you like to know?");
     const [prevQuery, setPrevQuery] = useState("");
     const [loading, setLoading] = useState(false);
 
@@ -48,14 +48,15 @@ function CohereInterface() {
                     {prevQuery}
                 </div>
                 <pre className="whitespace-pre-wrap break-words max-w-full text-left">
-                    {response
-                }</pre>
+                    {response}
+                </pre>
             </div>
             <div className="mt-6 flex flex-row w-full">
                 <Input
                     className="mr-5 flex flex-grow"
                     inputRef={inputElement}
                     disabled={loading}
+                    placeholder="what would you like to know?"
                     onKeyDown={handleKeyDown}
                 />
                 <Button
