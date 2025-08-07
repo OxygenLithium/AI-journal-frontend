@@ -38,7 +38,7 @@ function JournalItem({item, deleteEntry}) {
                     }
                 ]}
             />}
-            {!isEditing && <pre className="mr-20">{item.text}</pre>}
+            {!isEditing && <pre className="mr-20 whitespace-pre-wrap break-words">{item.text}</pre>}
             {isEditing &&
             <>
                 <TextField

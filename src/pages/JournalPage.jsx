@@ -1,7 +1,7 @@
 import React, { useCallback, useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 
-import { TextField, Typography, Button } from '@mui/material';
+import { TextField, Button } from '@mui/material';
 import JournalEntryScroll from '../components/JournalEntryScroll';
 
 
@@ -68,16 +68,16 @@ function QueryPage() {
     };
 
     const handleKeyDown = (e) => {
-        // if (e.code == "Enter") {
-        //     console.log(e.shiftKey);
-        //     if (!e.shiftKey && inputElement.current.value != "") {
-        //         sendAndClear();
-        //     }
-        // }
+        if (e.code == "Enter") {
+            console.log(e.shiftKey);
+            if (!e.shiftKey && inputElement.current.value != "") {
+                sendAndClear();
+            }
+        }
     };
 
     return (
-        <div className="w-full h-full overflow-scroll px-12 py-30 flex-1 flex flex-col">
+        <div className="w-full h-full overflow-scroll px-12 py-10 flex-1 flex flex-col">
             <h1 className="mb-12">Write a Journal Entry</h1>
             <JournalEntryScroll
                 className="flex-shrink"
@@ -91,11 +91,18 @@ function QueryPage() {
                     className="mr-5 flex flex-grow"
                     inputRef={inputElement}
                     disabled={loading}
+                    placeholder="Quick entry"
                     multiline
                     onKeyDown={handleKeyDown}
+                    inputProps={{
+                        style: {
+                          maxHeight: '200px',
+                          overflowY: 'scroll',
+                        },
+                    }}
                 />
                 <Button
-                className="flex-none"
+                className="flex-none h-12"
                 variant="contained"
                 onClick={sendAndClear}
                 disabled={loading}
